@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -160,3 +161,167 @@
   </script>
 </body>
 </html>
+=======
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Request Schedules</title>
+  <link rel="stylesheet" href="/css/admin.css">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #f8f9fa;
+      text-align: center;
+    }
+    .container {
+      max-width: 900px;
+      margin: 30px auto;
+    }
+    .card {
+      background: white;
+      padding: 20px;
+      margin-bottom: 15px;
+      border-radius: 10px;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
+      text-align: left;
+      display: flex;
+      align-items: center;
+      border-left: 8px solid #d9534f;      
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2);
+    }
+    
+    .profile-pic {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      margin-right: 20px;
+      border: 2px solid #d32f2f; /* Blue profile border */
+    }
+    .details {
+      flex-grow: 1;
+    }
+    .details h3 {
+      color: #d9534f;
+      font-size: 20px;
+      margin-bottom: 5px;
+    }
+    .details p {
+      font-size: 14px;
+      color: #555;
+      margin: 5px 0;
+    }
+    .admin-buttons {
+      margin-top: 10px;
+      display: flex;
+      gap: 10px;
+    }
+    .btn {
+      display: inline-block;
+      padding: 8px 12px;
+      background: #5bc0de;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      cursor: pointer;
+      border: none;
+      font-weight: bold;
+      transition: background 0.3s ease;
+    }
+    .btn:hover {
+      background: #31b0d5;
+    }
+    .btn.add-entry {
+      background: #d9534f;
+    }
+    .btn.add-entry:hover {
+      background: #c9302c;
+    }
+  
+  </style>
+</head>
+<body>
+  <%- include('partials/header') %>
+
+  <div class="container">
+    <h2>Scheduled Blood Requests</h2>
+    
+    <% if (schedules.length > 0) { %>
+      <% schedules.forEach(schedule => { %>
+        <div class="card">
+          <img src="/images/<%= schedule.gender === 'Male' ? 'man.png' : 'woman.png' %>" alt="Profile" class="profile-pic">
+          <div class="details">
+            <h3><%= schedule.name %></h3>
+            <p><strong>🩸 Blood Type:</strong> <%= schedule.bloodType %></p>
+            <p><strong>💉 Blood Amount:</strong> <%= schedule.bloodAmount %></p>
+            <p><strong>📍 Collection Center:</strong> <%= schedule.location %></p>
+            <p><strong>📅 Scheduled Date:</strong> <%= schedule.formattedScheduleDate %></p>
+            <p><strong>⏳ Time Slot:</strong> <%= schedule.timeSlot %></p>
+            <p><strong>📝 Reason:</strong> <%= schedule.reason %></p>
+            <p><strong>📜 Prescription:</strong> <%= schedule.prescription %></p>
+            
+            <div class="admin-buttons">
+              <button class="btn add-entry" data-id="<%= schedule._id %>">➕ Add Entry</button>
+              <button class="btn remove-entry" data-id="<%= schedule._id %>">❌ Remove Entry</button>
+            </div>
+          </div>
+        </div>
+      <% }); %>
+    <% } else { %>
+      <p>No scheduled blood requests available.</p>
+    <% } %>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      // Handle Add Entry
+      document.querySelectorAll(".add-entry").forEach(button => {
+        button.addEventListener("click", function () {
+          const scheduleId = this.getAttribute("data-id");
+
+          if (confirm("Are you sure you want to allocate blood from the system?")) {
+            fetch(`/admin/receive-blood/${scheduleId}`, { method: "POST" })
+              .then(response => response.json())
+              .then(data => {
+                if (data.success) {
+                  alert("Blood request added successfully!");
+                  location.reload();
+                } else {
+                  alert("Error: " + data.message);
+                }
+              })
+              .catch(error => console.error("Error:", error));
+          }
+        });
+      });
+
+      // Handle Remove Entry
+      document.querySelectorAll(".remove-entry").forEach(button => {
+        button.addEventListener("click", function () {
+          const scheduleId = this.getAttribute("data-id");
+
+          if (confirm("Are you sure you want to remove this schedule entry?")) {
+            fetch(`/admin/remove-request/${scheduleId}`, { method: "DELETE" })
+              .then(response => response.json())
+              .then(data => {
+                if (data.success) {
+                  alert("Schedule entry removed successfully!");
+                  location.reload();
+                } else {
+                  alert("Error: " + data.message);
+                }
+              })
+              .catch(error => console.error("Error:", error));
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>
+>>>>>>> 4c5af07 (Added Docker File)

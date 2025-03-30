@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -170,3 +171,177 @@
         
 </body>
 </html>
+=======
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schedule Blood Request</title>
+    <link rel="stylesheet" href="/css/requestSchedule.css">
+    
+</head>
+<body>
+    <%- include('partials/header') %>
+
+    <div class="container">
+        <div class="form-wrapper">
+            <h2 class="form-title" style="margin-bottom: 40px;">Fix Your Blood Request Schedule</h2>
+            <form id="schedule-form" class="styled-form">
+    
+                <label for="schedule-date">Select Date:</label>
+                <input type="date" id="schedule-date" name="scheduleDate" required>
+    
+                <label for="session-select">Select Session:</label>
+                <select id="session-select" name="session" required>
+                    <option value="" disabled selected>-- Select Session --</option>
+                    <option value="Morning">Morning</option>
+                    <option value="Afternoon">Afternoon</option>
+                    <option value="Evening">Evening</option>
+                </select>
+    
+                <label for="time-slot">Select Time Slot:</label>
+                <select id="time-slot" name="timeSlot" required>
+                    <option value="" disabled selected>Select Session First</option>
+                </select>
+    
+                <label>Requested Blood Type:</label>
+                <input type="text" id="bloodType" name="bloodType" value="<%= userBloodType %>" readonly>
+                <input type="hidden" name="bloodType" value="<%= userBloodType %>">
+    
+                <label>Requested Blood Amount (Units):</label>
+                <input type="text" id="bloodAmount" name="bloodAmount" value="<%= recipientBloodAmount %>" readonly>
+                <input type="hidden" name="bloodAmount" value="<%= recipientBloodAmount %>">
+    
+                <label>District:</label>
+                <input type="text" id="district" value="<%= selectedDistrict %>" readonly>
+                <input type="hidden" name="location" value="<%= selectedDistrict %>">
+
+    
+                <label for="address-select">Select Blood Bank Address:</label>
+                <select id="address-select" name="selectedAddress" required>
+                    <option value="" disabled selected>-- Select Address --</option>
+                    <% selectedBloodBank.addresses.forEach(address => { %>
+                        <option value="<%= address %>"><%= address %></option>
+                    <% }) %>
+                </select>
+    
+                <label>Reason for Request:</label>
+                <textarea id="reason" name="reason" readonly><%= requestReason %></textarea>
+                <input type="hidden" name="reason" value="<%= requestReason %>">
+    
+                <label>Do you have a doctor's prescription?</label>
+                <select name="prescription" id="prescription" required>
+                    <option value="" disabled selected>-- Select --</option>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+    
+                <div class="declaration">
+                    <input type="checkbox" id="confirm-checkbox" required>
+                    <label for="confirm-checkbox">I confirm my blood request schedule</label>
+                </div>
+    
+                <button type="submit" id="submit-btn" class="submit-btn" disabled>Submit</button>
+            </form>
+        </div>
+    </div>
+    <%- include('partials/footer') %>
+    
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const scheduleForm = document.getElementById("schedule-form");
+            const timeSlotSelect = document.getElementById("time-slot");
+            const sessionSelect = document.getElementById("session-select");
+            const confirmCheckbox = document.getElementById("confirm-checkbox");
+            const submitBtn = document.getElementById("submit-btn");
+            const scheduleDateInput = document.getElementById("schedule-date"); // ✅ Ensure this input exists
+        
+            if (!scheduleForm || !timeSlotSelect || !sessionSelect || !confirmCheckbox || !submitBtn || !scheduleDateInput) {
+                console.error("One or more form elements are missing.");
+                return;
+            }
+        
+            const timeSlots = {
+                Morning: ["08:00 AM - 09:00 AM", "09:00 AM - 10:00 AM", "10:00 AM - 11:00 AM"],
+                Afternoon: ["12:00 PM - 01:00 PM", "01:00 PM - 02:00 PM", "02:00 PM - 03:00 PM"],
+                Evening: ["04:00 PM - 05:00 PM", "05:00 PM - 06:00 PM", "06:00 PM - 07:00 PM"]
+            };
+        
+            // Handle session selection
+            sessionSelect.addEventListener("change", function () {
+                const session = this.value;
+                timeSlotSelect.innerHTML = ""; // Clear existing options
+        
+                const defaultOption = document.createElement("option");
+                defaultOption.value = "";
+                defaultOption.textContent = "Select Time Slot";
+                defaultOption.disabled = true;
+                defaultOption.selected = true;
+                timeSlotSelect.appendChild(defaultOption);
+        
+                if (session && timeSlots[session]) {
+                    timeSlots[session].forEach(slot => {
+                        const option = document.createElement("option");
+                        option.value = slot;
+                        option.textContent = slot;
+                        timeSlotSelect.appendChild(option);
+                    });
+                }
+            });
+        
+            // Enable submit button only if the checkbox is checked
+            confirmCheckbox.addEventListener("change", function () {
+                submitBtn.disabled = !this.checked;
+            });
+        
+            // Handle form submission
+            scheduleForm.addEventListener("submit", function (event) {
+                event.preventDefault(); // Prevent default form submission
+        
+                const formData = new FormData(scheduleForm);
+        
+                // ✅ Append the schedule date manually if not included
+                if (!formData.has("scheduleDate")) {
+                    formData.append("scheduleDate", scheduleDateInput.value);
+                }
+        
+                // Manually append missing fields
+                const fields = ["bloodType", "bloodAmount", "selectedAddress", "reason", "prescription"];
+                fields.forEach(field => {
+                    const element = document.getElementById(field) || document.querySelector(`[name='${field}']`);
+                    if (element && formData.get(field) === null) { // Ensure field is not missing
+                        formData.append(field, element.value);
+                    }
+                });
+        
+                // Debugging: Log form data before sending
+                console.log("Form Data Sent:");
+                for (let pair of formData.entries()) {
+                    console.log(`${pair[0]}: ${pair[1]}`);
+                }
+        
+                fetch("/request-schedule", {
+                    method: "POST",
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert("Request scheduled successfully!");
+                        window.location.href = "/status"; // Redirect on success
+                    } else {
+                        throw new Error(data.message || "Failed to schedule request");
+                    }
+                })
+                .catch(error => {
+                    alert(error.message);
+                });
+            });
+        });
+    </script>
+        
+</body>
+</html>
+>>>>>>> 4c5af07 (Added Docker File)

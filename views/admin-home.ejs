@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -78,3 +79,85 @@
   <%- include('partials/footer') %>
 </body>
 </html>
+=======
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home</title>
+  <link rel="stylesheet" href="/css/admin-home.css">
+ 
+</head>
+<body>
+  
+  <%- include('partials/header') %>
+
+  <!-- Hero Section with Gentle Background -->
+  <div class="hero-section">
+    <h2>Welcome, <%= user ? user.username : 'Guest' %>!</h2>
+    <p class="hero-text">Donate blood. Save lives.</p>
+  </div>
+  <% if (user && user.role === 'admin') { %>
+    <div class="btns">
+      <div class="row">
+          <div class="admin-buttons">
+              <a href="/admin/donate-history" class="btn">Donation History</a>
+          </div>
+          <div class="admin-buttons">
+              <a href="/admin/request-history" class="btn">Request History</a>
+          </div>
+      </div>
+      <div class="row">
+          <div class="admin-buttons">
+              <a href="/admin/donations" class="btn">Donation Forms</a>
+          </div>
+          <div class="admin-buttons">
+              <a href="/admin/requests" class="btn">Request Forms</a>
+          </div>
+      </div>
+      <div class="row">
+          <div class="admin-buttons">
+              <a href="/admin/schedule" class="btn">Donation Schedules</a>
+          </div>
+          <div class="admin-buttons">
+              <a href="/admin/receive-schedule" class="btn">Request Schedules</a>
+          </div>
+      </div>
+    </div>
+  
+    
+  <% } %>
+
+  <!-- Admin Options -->
+ 
+    
+
+  <!-- Options Container -->
+  <div class="options-container">
+    <div class="option-card">
+      <img src="/images/blood-donation.png" alt="Donate Blood">
+      <h3>Donate Blood</h3>
+      <p>Give the gift of life. Every drop counts!</p>
+      <a href="/donate" class="btn">Donate Now</a>
+    </div>
+    
+    <div class="option-card">
+      <img src="/images/blood-receiving.png" alt="Receive Blood">
+      <div class="receive-div">
+        <h3>Receive Blood</h3>
+        <p>Need blood? Find donors easily.</p>
+      </div>
+      <a href="/receive" class="btn" id="receive-btn">Request Blood</a>
+    </div>
+
+    
+  </div>
+
+  <!-- Contact Us Section -->
+  
+
+  <%- include('partials/footer') %>
+</body>
+</html>
+>>>>>>> 4c5af07 (Added Docker File)

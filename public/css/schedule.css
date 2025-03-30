@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 body {
     background: #f8f9fa;
@@ -77,3 +78,84 @@ body {
     border: none;
 }
 
+=======
+
+body {
+    background: #f8f9fa;
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    margin-top: -350px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+.form-wrapper {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px;
+}
+.form-title {
+    text-align: center;
+    color: #d9534f;
+    font-weight: bold;
+}
+.styled-form label {
+    display: block;
+    font-weight: 300;
+    color: #777;
+    margin-bottom: 8px;
+    border-left: 4px solid #ccc;
+    padding-left: 8px;
+    margin-top: 20px;
+}
+.styled-form input, .styled-form select, .styled-form textarea {
+    width: 100%;
+    padding: 10px;
+    
+    margin-bottom: 20px;
+    border: none;
+    border-bottom: 2px solid #ccc;
+    font-size: 14px;
+    background: transparent;
+    outline: none;
+    box-sizing: border-box;
+}
+.styled-form input:focus, .styled-form select:focus, .styled-form textarea:focus {
+    border-bottom: 2px solid #d9534f;
+}
+.submit-btn {
+    width: 100%;
+    padding: 12px;
+    background: #d9534f;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+.submit-btn:hover {
+    background: #c9302c;
+}
+.declaration {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 30px;
+}
+.declaration input {
+    width: 5%;
+    margin-top: 22px;
+    margin-right: 10px ;
+}
+.declaration label{
+    border: none;
+}
+
+>>>>>>> 4c5af07 (Added Docker File)

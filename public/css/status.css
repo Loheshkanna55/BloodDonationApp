@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /* General Styling */
 body {
   font-family: Arial, sans-serif;
@@ -164,3 +165,171 @@ body {
   background-color: #c9302c;
   transform: scale(1.02);
 }
+=======
+/* General Styling */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #f8f9fa;
+  text-align: center;
+}
+
+
+
+/* Navigation Links */
+.nav-links {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  display: flex;
+  gap: 20px;
+}
+
+
+
+/* Contact Info */
+.contact-info {
+  max-width: 600px;
+  margin: auto;
+  padding: 20px;
+  border-left: 4px solid #d32f2f;
+  text-align: left;
+}
+
+.contact-info h1 {
+  font-size: 24px;
+  margin-bottom: 15px;
+}
+
+.contact-info p {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.contact-link {
+  color: #d32f2f;
+  text-decoration: none;
+  transition: text-decoration 0.3s ease;
+}
+
+.contact-link:hover {
+  text-decoration: underline;
+}
+
+/* Profile Section */
+.profile-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 10px;
+}
+
+.profile-pic {
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+}
+
+/* Status Cards */
+#status-container {
+  max-width: 450px;
+  margin: 20px auto;
+}
+
+.status-card {
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  border-left: 5px solid #dc3545;
+  text-align: left;
+  font-size: 14px;
+}
+
+/* Status Messages */
+.schedule-message {
+  background: #e8f5e9;
+  padding: 10px;
+  border-left: 5px solid #4caf50;
+  font-weight: bold;
+  color: #2e7d32;
+  border-radius: 5px;
+  margin-top: 15px;
+}
+
+.cancel-msg , .avail-msg{
+  background: #fff3cd;
+  padding: 10px;
+  border-left: 5px solid #ff9800;
+  font-weight: bold;
+  color: #856404;
+  border-radius: 5px;
+  margin-top: 15px;
+}
+
+.completed-status {
+  background-color: #28a745;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-weight: bold;
+  display: inline-block;
+}
+
+.success-message {
+  font-size: 16px;
+  color: #333;
+  background: #eafaf1;
+  padding: 10px;
+  border-radius: 8px;
+  border-left: 5px solid #4CAF50;
+  margin-top: 10px;
+}
+
+.status-message {
+  font-size: 15px;
+  color: #555;
+  background: #fff4e5;
+  padding: 12px;
+  border-radius: 8px;
+  border-left: 5px solid #ff9800;
+  margin-top: 5px;
+  max-width: 600px;
+}
+
+/* Delete Button */
+.delete-btn {
+  background-color: #ff4d4d;
+  color: white;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.delete-btn:hover {
+  background-color: #cc0000;
+}
+.logout-link {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  font-size: 18px;
+  text-decoration: none;
+  color: #fff;
+  background-color: #d9534f;
+  padding: 10px 15px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.logout-link:hover {
+  background-color: #c9302c;
+  transform: scale(1.02);
+}
+>>>>>>> 4c5af07 (Added Docker File)

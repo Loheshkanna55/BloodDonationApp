@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 <div class="app-name-section">
     <a href="/status" class="status-link" style="font-size: 12px;">Check Status</a>
@@ -52,3 +53,59 @@
 
 
 
+=======
+
+<div class="app-name-section">
+    <a href="/status" class="status-link" style="font-size: 12px;">Check Status</a>
+    <a href="/logout" class="logout-link" style="font-size: 12px;">Log out</a> 
+  </div>
+
+<style>
+  .app-name-section {
+      background: url('/images/donationHubBanner.png') no-repeat center center;
+      text-align: center;
+      padding: 55px 25px;
+      position: relative;
+      background-size:contain; /* Scales image to fit container */
+      height: 0px; /* Match image height */
+      background-color: #d82929;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: Arial, sans-serif;
+  }
+  .app .app-name-section{
+    height: 0px;
+  }
+ 
+
+  .status-link{
+        margin-right:95px;
+    }
+    /* Logout Button */
+    .logout-link, .status-link {
+        position: absolute;
+        top: 90px;
+        right: 24px;
+        font-size: 18px;
+        text-decoration: none;
+        color: white;
+        background-color: rgba(217, 83, 79, 0.9);
+        padding: 10px 15px;
+        border-radius: 5px;
+        margin-top: -30px;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+        
+    }
+
+    .logout-link:hover ,.status-link:hover{
+        background-color: rgba(201, 48, 44, 0.9);
+        transform: scale(1.02);
+    }
+
+
+</style>
+
+
+
+>>>>>>> 4c5af07 (Added Docker File)

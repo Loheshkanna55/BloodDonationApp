@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -80,3 +81,87 @@
     });
 </script>
 
+=======
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blood Availability</title>
+    <link rel="stylesheet" href="/css/availability.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #f8f9fa; /* Gentle background */
+    text-align: center;
+}
+
+/* App Name Section */
+
+.btn {
+    display: inline-block;
+    padding: 10px 15px;
+    background: #ff4757;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+.btn:hover {
+    background: #e84118;
+}
+
+
+    </style>
+</head>
+<body>
+    <%- include('partials/header') %>
+    <div class="container">
+        <h2 class="title" style="text-align: center;"  >Available Blood Units for <%= userBloodType %></h2>
+
+        <% if (availableBloodBanks.length > 0) { %>
+            <% availableBloodBanks.forEach((bank, index) => { %>
+                <div class="card">
+                    <div class="card-header">
+                        <h3><span class="material-icons">location_on</span> <%= bank.location %></h3>
+                    </div>
+                    <div class="card-body">
+                        <p><strong>Blood Type:</strong> 🩸 <%= userBloodType %></p>
+                        <p><strong>Blood Amount:</strong> <%= recipientBloodAmount %> Units</p>
+                        <p><strong>Status:</strong> ✅ Available</p>
+                    </div>
+                    <div class="card-footer">
+                      <button class="btn reserve-btn" data-district="<%= bank.location %>">Reserve Blood</button>
+                    </div>
+                </div>
+            <% }) %>
+        <% } else { %>
+            <p class="no-data">⚠️ No available blood units found.</p>
+        <% } %>
+    </div>
+
+    <div class="contact-us">
+        <img src="/images/contact-us.png" alt="Contact Us">
+        <div class="contact-text">
+          <a href="/contact" class="btn">About Us</a>
+          <p>Have questions? Reach out to us anytime.</p>
+        </div>
+    </div>
+</body>
+</html>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        document.querySelectorAll(".reserve-btn").forEach(button => {
+            button.addEventListener("click", function () {
+                const district = this.getAttribute("data-district"); // ✅ Get district
+                window.location.href = `/request-schedule/${district}`; // ✅ Pass district in URL
+            });
+        });
+    });
+</script>
+
+>>>>>>> 4c5af07 (Added Docker File)
