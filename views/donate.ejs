@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Donate Blood</title>
+  <link rel="stylesheet" href="/css/donate.css">
+  <style>
+    /* Status and Logout Link Styling */
+    .status-link, .logout-link {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  font-size: 18px;
+  text-decoration: none;
+  color: #fff;
+  background-color: #d9534f;
+  padding: 10px 15px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+.status-link {
+  right: 130px; /* Adjust position to avoid overlapping */
+}
+
+    
+.status-link:hover, .logout-link:hover {
+  background-color: #c9302c;
+  transform: scale(1.02);
+}
+
+    /* Blood Donation Hub Title with Original Background */
+    .app-name-section {
+      background: linear-gradient(to right, #ff6b6b, #ff4757); /* Original deep red */
+      text-align: center;
+      padding: 20px;
+      position: relative;
+    }
+
+    .app-name-section h1 {
+      color: white;
+      font-size: 32px;
+    }
+    .hero-section{
+      align-items: center;
+      justify-content: center;
+      flex-direction: row;
+      background: linear-gradient(to right, #ff6b6b, #ff4757);
+      color: white;
+      
+    }
+  </style>
+</head>
+<body>
+  <%- include('partials/header') %>
+
+  <div class="hero-section">
+    <h1 style="display:flex; align-items: center; justify-content: center;">Donate Blood & Save Lives</h1>
+    <p style="display:flex; align-items: center; justify-content: center;">Your small act of kindness can make a big difference.</p>
+  </div>
+
+  <div class="form-container">
+    <h2>Blood Donation Form</h2>
+    <form action="/donate/donate" method="POST">
+      <label for="name">Full Name:</label>
+      <input type="text" name="name" id="name" required>
+      
+      <!-- Gender -->
+      <label for="gender">Gender:</label>
+      <select name="gender" id="gender" required>
+        <option value="" disabled selected>Select Gender</option>
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+        <option value="Other">Other</option>
+      </select>
+
+      <!-- Phone Number -->
+      <label for="phone">Phone Number:</label>
+      <input type="tel" name="phone" id="phone" pattern="[0-9]{10}" maxlength="10" required placeholder="Enter 10-digit phone number">
+
+      <!-- Address -->
+      <label for="address">Address:</label>
+      <textarea name="address" id="address" rows="2" required></textarea>
+
+      <!-- DOB -->
+      <label for="dob">Date of Birth:</label>
+      <input type="date" name="dob" id="dob" required>
+
+      <!-- Blood Type -->
+      <label for="bloodType">Blood Type:</label>
+      <select name="bloodType" id="bloodType" required>
+        <option value="" disabled selected>Choose Blood type</option>
+        <option value="A+">A+</option>
+        <option value="A-">A-</option>
+        <option value="B+">B+</option>
+        <option value="B-">B-</option>
+        <option value="AB+">AB+</option>
+        <option value="AB-">AB-</option>
+        <option value="O+">O+</option>
+        <option value="O-">O-</option>
+      </select>
+
+      <!-- Location (Tamil Nadu Districts) -->
+      <label for="location">Select Your District:</label>
+      <select name="location" id="location" required>
+          <option value="" disabled selected>Choose your district</option>
+          <option value="Ariyalur">Ariyalur</option>
+          <option value="Chengalpattu">Chengalpattu</option>
+          <option value="Chennai">Chennai</option>
+          <option value="Coimbatore">Coimbatore</option>
+          <option value="Cuddalore">Cuddalore</option>
+          <option value="Dharmapuri">Dharmapuri</option>
+          <option value="Dindigul">Dindigul</option>
+          <option value="Erode">Erode</option>
+          <option value="Kallakurichi">Kallakurichi</option>
+          <option value="Kanchipuram">Kanchipuram</option>
+          <option value="Kanniyakumari">Kanniyakumari</option>
+          <option value="Karur">Karur</option>
+          <option value="Krishnagiri">Krishnagiri</option>
+          <option value="Madurai">Madurai</option>
+          <option value="Mayiladuthurai">Mayiladuthurai</option>
+          <option value="Nagapattinam">Nagapattinam</option>
+          <option value="Namakkal">Namakkal</option>
+          <option value="Nilgiris">Nilgiris</option>
+          <option value="Perambalur">Perambalur</option>
+          <option value="Pudukkottai">Pudukkottai</option>
+          <option value="Ramanathapuram">Ramanathapuram</option>
+          <option value="Ranipet">Ranipet</option>
+          <option value="Salem">Salem</option>
+          <option value="Sivagangai">Sivagangai</option>
+          <option value="Tenkasi">Tenkasi</option>
+          <option value="Thanjavur">Thanjavur</option>
+          <option value="Theni">Theni</option>
+          <option value="Thoothukudi">Thoothukudi</option>
+          <option value="Tiruchirappalli">Tiruchirappalli</option>
+          <option value="Tirunelveli">Tirunelveli</option>
+          <option value="Tirupathur">Tirupathur</option>
+          <option value="Tiruppur">Tiruppur</option>
+          <option value="Tiruvallur">Tiruvallur</option>
+          <option value="Tiruvannamalai">Tiruvannamalai</option>
+          <option value="Tiruvarur">Tiruvarur</option>
+          <option value="Vellore">Vellore</option>
+          <option value="Viluppuram">Viluppuram</option>
+          <option value="Virudhunagar">Virudhunagar</option>
+      </select>
+
+      <!-- Health Condition -->
+      <label for="healthCondition">Health Condition:</label>
+      <select name="healthCondition" id="healthCondition" required onchange="toggleSymptoms()">
+        <option value="" disabled selected>Select health condition</option>
+        <option value="Good">Good</option>
+        <option value="Not Good">Not Good</option>
+      </select>
+
+      <!-- Symptoms (Only appears when 'Not Good' is selected) -->
+      <div id="symptoms-section" style="display: none;">
+        <label for="symptoms">Select Symptoms:</label>
+        <select name="symptoms" id="symptoms">
+            <option value="" disabled selected>Select Symptom</option>
+            <option value="Fever">Fever</option>
+            <option value="Cold">Cold</option>
+            <option value="Cough">Cough</option>
+            <option value="Body Pain">Body Pain</option>
+            <option value="Weakness">Weakness</option>
+            <option value="Headache">Headache</option>
+            <option value="Dizziness">Dizziness</option>
+            <option value="Vomiting">Vomiting</option>
+            <option value="Skin Rash">Skin Rash</option>
+            <option value="Diarrhea">Diarrhea</option>
+        </select>
+    </div>
+    <!-- Blood Donation Amount -->
+<label for="donationAmount">How much blood do you want to donate?</label>
+<select name="donationAmount" id="donationAmount" required>
+  <option value="" disabled selected>Select amount</option>
+  <option value="100ml">100 mL</option>
+  <option value="250ml">250 mL</option>
+  <option value="350ml">350 mL</option>
+  <option value="450ml">450 mL</option>
+  <option value="500ml">500 mL</option>
+</select>
+
+      <!-- Message Box -->
+      <label for="message">Any Message:</label>
+      <textarea name="message" id="message" rows="4" placeholder="Write your message..."></textarea>
+
+      <button type="submit">Register</button>
+    </form>
+  </div>
+
+  
+
+  <%- include('partials/footer') %>
+
+  <script>
+    
+  </script>
+</body>
+</html>

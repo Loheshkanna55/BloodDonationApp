@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Schedule Donation</title>
+  <link rel="stylesheet" href="/css/schedule.css">
+  
+  
+</head>
+<body>
+  <%- include('partials/header') %>
+    <div class="container">
+      <div class="form-wrapper" style="margin-top: 400px; ">
+        <h2 class="form-title">Fix Your Donation Schedule</h2>
+        <form id="schedule-form" class="styled-form">
+            <label for="schedule-date">Select Date:</label>
+            <input type="date" id="schedule-date" name="scheduleDate" required>
+            
+            <label for="session-select">Select Session:</label>
+            <select id="session-select" name="session" required>
+              <option value="" disabled selected class="default-option">--Select Session--</option>
+              <option value="Morning">Morning</option>
+              <option value="Afternoon">Afternoon</option>
+              <option value="Evening">Evening</option>
+            </select>
+          
+            <label for="time-slot">Select Time Slot:</label>
+            <select id="time-slot" name="timeSlot" required>
+              <option value="" disabled selected class="default-option">Select Session First</option>
+            </select>
+          
+            
+          
+            <label for="medications">Medications (Last 3 days)?</label>
+            <select id="medications" name="medications" required>
+              <option value="" disabled selected class="default-option">--Select--</option>
+              <option value="No">No</option>
+              <option value="Yes">Yes</option>
+            </select>
+          
+            <label for="vaccination">Recent Vaccination (Last 28 days)?</label>
+            <select id="vaccination" name="vaccination" required>
+              <option value="" disabled selected class="default-option">--Select--</option>
+              <option value="No">No</option>
+              <option value="Yes">Yes</option>
+            </select>
+          
+            <label for="recent-illness">Recent Illness?</label>
+            <select id="recent-illness" name="recentIllness" required>
+              <option value="" disabled selected class="default-option">--Select--</option>
+              <option value="No">No</option>
+              <option value="Yes">Yes</option>
+            </select>
+          
+            <label for="blood-pressure">Blood Pressure Level:</label>
+            <select id="blood-pressure" name="bloodPressure" required>
+              <option value="" disabled selected class="default-option">--Select--</option>
+              <option value="Normal">Normal</option>
+              <option value="High">High</option>
+              <option value="Low">Low</option>
+            </select>
+
+            <label for="donation-amount">Donation Amount:</label>
+            <input type="text" id="donation-amount" name="donationAmount" value="<%= donationAmount %>" readonly>
+            
+            <label for="location">Your District:</label>
+            <input type="text" id="location" name="location" value="<%= location %>" readonly>
+            
+            <label for="address">Select Blood Bank Address:</label>
+            <select id="address" name="address" required>
+              <option value="" disabled selected class="default-option">--Select Address--</option>
+
+              <% addresses.forEach(address => { %>
+                <option value="<%= address %>"><%= address %></option>
+              <% }); %>
+            </select>
+
+            <div class="declaration">
+                <input type="checkbox" id="confirm-checkbox" required style="display: inline;">
+                <label for="confirm-checkbox" style="border: none;">I confirm my donation schedule</label>
+            </div>
+            
+            <button type="submit" id="submit-btn" class="submit-btn" disabled>Submit</button>
+          </form>
+          
+          
+      </div>
+    </div>
+  
+    <%- include('partials/footer') %>
+  
+      <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Get elements
+            const timeSlotSelect = document.getElementById("time-slot");
+            const sessionSelect = document.getElementById("session-select");
+            const confirmCheckbox = document.getElementById("confirm-checkbox");
+            const submitBtn = document.getElementById("submit-btn");
+        
+            // Define time slots for each session
+            const timeSlots = {
+                Morning: ["08:00 AM - 09:00 AM", "09:00 AM - 10:00 AM", "10:00 AM - 11:00 AM"],
+                Afternoon: ["12:00 PM - 01:00 PM", "01:00 PM - 02:00 PM", "02:00 PM - 03:00 PM"],
+                Evening: ["04:00 PM - 05:00 PM", "05:00 PM - 06:00 PM", "06:00 PM - 07:00 PM"]
+            };
+        
+            // Handle session selection and update time slots
+            sessionSelect.addEventListener("change", function () {
+                const session = this.value;
+                timeSlotSelect.innerHTML = '<option value="" disabled selected>Select Time Slot</option>';
+        
+                if (session && timeSlots[session]) {
+                    timeSlots[session].forEach(slot => {
+                        const option = document.createElement("option");
+                        option.value = slot;
+                        option.textContent = slot;
+                        timeSlotSelect.appendChild(option);
+                    });
+                }
+            });
+        
+            // Disable submit button initially
+            submitBtn.disabled = true;
+        
+            // Enable/Disable submit button based on checkbox state
+            confirmCheckbox.addEventListener("change", function () {
+                submitBtn.disabled = !this.checked;
+            });
+        
+            // Handle form submission
+            document.getElementById("schedule-form").addEventListener("submit", async function (event) {
+                event.preventDefault();
+        
+                // Get form data
+                const scheduleData = {
+                    scheduleDate: document.getElementById("schedule-date").value,
+                    timeSlot: document.getElementById("time-slot").value,
+                    medications: document.getElementById("medications").value,
+                    vaccination: document.getElementById("vaccination").value,
+                    recentIllness: document.getElementById("recent-illness").value,
+                    bloodPressure: document.getElementById("blood-pressure").value,
+                    location: document.getElementById("location").value, // Ensure this field exists
+                    address: document.getElementById("address").value  // Ensure this field exists
+                };
+        
+                // Validate required fields
+                if (!scheduleData.location || !scheduleData.address) {
+                    alert("Location and Address are required.");
+                    return;
+                }
+        
+                try {
+                    const response = await fetch("/schedule", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify(scheduleData)
+                    });
+        
+                    const result = await response.json();
+                    if (result.success) {
+                        alert("Schedule submitted successfully!");
+                        window.location.href = "/status";
+                    } else {
+                        alert("Failed to submit schedule. Please try again.");
+                    }
+                } catch (error) {
+                    console.error("Error submitting form:", error);
+                    alert("An error occurred. Please try again later.");
+                }
+            });
+        });
+        </script>
+        
+    
+  </body>
+  
+</html>

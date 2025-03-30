@@ -1,0 +1,133 @@
+/* General Styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+}
+
+/* Hero Section */
+.app-name-section {
+    background: linear-gradient(to right, #ff6b6b, #ff4757);
+    color: white;
+    padding: 20px;
+}
+
+.app-name-section h1 {
+    margin: 0;
+    font-size: 36px;
+}
+
+/* Hero Section (Gentle Background) */
+.hero-section {
+    background: #f0f0f0;
+    padding: 30px;
+    border-radius: 10px;
+    margin: 20px auto;
+    width: 60%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.hero-section h2 {
+    font-size: 26px;
+    color: #333;
+}
+
+.hero-text {
+    font-size: 16px;
+    font-weight: bold;
+    color: #d50000;
+}
+
+
+/* Form Container */
+.form-container {
+    max-width: 500px;
+    background: white;
+    padding: 25px;
+    margin: 30px auto;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Form Titles & Labels */
+h2 {
+    text-align: left;
+    color: #d9534f;
+    border-left: 5px solid #d9534f;
+    padding-left: 10px;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+form label {
+    font-weight: 300; /* Light-weight font */
+    color: #777; /* Gray color font */
+    display: block;
+    margin-bottom: 8px;
+    border-left: 4px solid #ccc; /* Gray left border */
+    padding-left: 8px;
+}
+
+/* Form Inputs - Bottom Border Only */
+form input,
+form select,
+form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 35px; /* Added more spacing between fields */
+    border: none;
+    border-bottom: 2px solid #ccc; /* Bottom border only */
+    font-size: 14px;
+    box-sizing: border-box;
+    background: transparent;
+    outline: none;
+}
+
+form input:focus,
+form select:focus,
+form textarea:focus {
+    border-bottom: 2px solid #d9534f; /* Highlight on focus */
+}
+
+/* Other Reason Input */
+#other-reason-section {
+    display: none;
+}
+
+/* Submit Button */
+form button {
+    width: 100%;
+    padding: 12px;
+    background-color: #d9534f;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+form button:hover {
+    background-color: #c9302c;
+}
+
+
+  .btn {
+    display: inline-block;
+    padding: 10px 15px;
+    background: #ff4757;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 10px;
+  }
+  
+  .btn:hover {
+    background: #e84118;
+  }
+
+/* Header & Footer */
+
+
+
