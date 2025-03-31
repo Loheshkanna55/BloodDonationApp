@@ -5,9 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login</title>
   <link rel="stylesheet" href="/css/styles.css">
+  <style>
+    .login{
+      margin-top: 60px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+  </style>
 </head>
 <body>
-  <h1>Blood Donation</h1> <!-- Single title -->
+  <div class="login">
+    <h1>Blood Donation</h1> <!-- Single title -->
   <div class="container">
     <h2>Login</h2>
     <% if (error) { %> <!-- Display error message if it exists -->
@@ -24,5 +34,7 @@
     
   </div>
   <%- include('partials/login-footer') %>
+  </div>
+  
 </body>
 </html>
