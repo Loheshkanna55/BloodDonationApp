@@ -4,6 +4,9 @@ body {
     background: #f8f9fa;
     margin: 0;
     text-align: center;
+    transform: scale(1.25);
+  transform-origin: top left;
+  width: 80%;
 }
 
 /* Container */

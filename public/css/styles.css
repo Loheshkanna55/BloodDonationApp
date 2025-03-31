@@ -8,6 +8,9 @@ body {
   align-items: center;
   justify-content: center;
   height: 100vh;
+  transform: scale(1.25);
+  transform-origin: top left;
+  width: 80%;
 }
 
 h1 {

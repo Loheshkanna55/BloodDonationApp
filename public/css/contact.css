@@ -3,6 +3,9 @@ body {
     background-color: #f8f9fa;
     margin: 0;
     padding: 0;
+    transform: scale(1.25);
+    transform-origin: top left;
+    width: 80%;
 }
 .app-name-section {
     background: linear-gradient(to right, #ff6b6b, #ff4757);
