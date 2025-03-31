@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const session = require('express-session');
+const MongoStore = require('connect-mongo');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcryptjs');
@@ -42,11 +43,16 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Middleware 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
 app.use(session({
-  secret: "your_secret_key",
+  secret: process.env.SECRET || "6f8d1b4a9c3e7d2f5a6b0e4c8d1f2a3b",
   resave: false,
-  saveUninitialized: false, // Change to false to prevent creating empty sessions
-  cookie: { secure: false } 
+  saveUninitialized: false, // Prevents creating empty sessions
+  store: MongoStore.create({
+    mongoUrl: process.env.MONGO_URI, // Use your MongoDB URI
+    ttl: 14 * 24 * 60 * 60 // Session expiration (14 days)
+  }),
+  cookie: { secure: false } // Set to true if using HTTPS
 }));
 
 
