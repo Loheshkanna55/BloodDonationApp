@@ -50,7 +50,6 @@ app.use(session({
   saveUninitialized: false, // Prevents creating empty sessions
   store: MongoStore.create({
     mongoUrl: process.env.MONGO_URI, // Use your MongoDB URI
-    ttl: 14 * 24 * 60 * 60 // Session expiration (14 days)
   }),
   cookie: { secure: false } // Set to true if using HTTPS
 }));
