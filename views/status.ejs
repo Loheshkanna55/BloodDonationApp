@@ -53,7 +53,7 @@
     
             <% } else if (donationStatus === 'Accepted_No_Schedule') { %>
               <span class="approved">✅ Donation Form Approved!</span>
-              <p class="no-schedule">
+              <p class="cancel-msg">
                 Form was approved but No schedule fixed yet. <a href="/schedule" class="schedule-link">Click here to schedule your donation schedule</a>.
               </p>
     
@@ -79,7 +79,7 @@
               <p class="status-message">Unfortunately, your Donation Request Form was Rejected. Please check with the admin.</p>
     
             <% } else if (donationStatus === 'Completed') { %>
-              <span class="completed-status">Donation Completed!</span>
+              <span class="completed">Donation Completed!</span>
               <p class="success-message">
                  Thank you for donating blood! Your contribution has made a difference.  
                 Keep promoting blood donation. ❤️
