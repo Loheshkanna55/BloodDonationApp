@@ -31,9 +31,11 @@ const app = express();
 // MongoDB connection
 console.log('MONGO_URI:', process.env.MONGO_URI);
 
-mongoose.connect('mongodb+srv://Lohesh:Loki2004@cluster0.n992qh5.mongodb.net/blood-donation', {
- 
-  serverSelectionTimeoutMS: 30000
+mongoose.connect('mongodb+srv://Lohesh:Loki2004@cluster0.n992qh5.mongodb.net/blood-donation?retryWrites=true&w=majority', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  serverSelectionTimeoutMS: 5000
+
 })
 .then(() => console.log('MongoDB connected'))
 .catch(err => console.error('MongoDB connection error:', err));
