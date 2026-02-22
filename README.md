@@ -215,164 +215,6 @@ This platform addresses the critical challenge of blood availability by providin
 - No plain text password storage
 - Secure session management with configurable secrets
 
-## API Endpoints
-
-### Authentication Routes
-- `GET /` - Login page
-- `POST /login` - User authentication
-- `GET /register` - Registration page
-- `POST /register` - User registration
-- `GET /logout` - User logout
-
-### User Routes
-- `GET /home` - User dashboard
-- `GET /donate` - Donation form
-- `POST /donate/donate` - Submit donation
-- `GET /receive` - Request form
-- `POST /receive/receive` - Submit request
-- `GET /status` - Check submission status
-- `GET /availability` - View blood availability
-- `GET /contact` - About us page
-
-### Schedule Routes
-- `GET /schedule` - Donation schedule form
-- `POST /schedule` - Submit donation schedule
-- `GET /request-schedule/:district` - Request schedule form
-- `POST /request-schedule` - Submit request schedule
-
-### Admin Routes
-- `GET /admin-home` - Admin dashboard
-- `GET /admin/donations` - View donation requests
-- `GET /admin/requests` - View blood requests
-- `POST /admin/donations/:id/:status` - Update donation status
-- `POST /admin/requests/:id/:status` - Update request status
-- `GET /admin/schedule` - View donation schedules
-- `GET /admin/receive-schedule` - View request schedules
-- `POST /admin/add-blood/:scheduleId` - Add blood to inventory
-- `DELETE /admin/remove-schedule/:scheduleId` - Cancel donation schedule
-- `POST /admin/receive-blood/:scheduleId` - Allocate blood to recipient
-- `DELETE /admin/remove-request/:scheduleId` - Cancel request schedule
-- `GET /admin/donate-history` - View donation history
-- `GET /admin/request-history` - View request history
-
-### Delete Operations
-- `DELETE /donate/delete-donation/:id` - Delete donation form
-- `DELETE /receive/delete-request/:id` - Delete request form
-
-## Database Schema Details
-
-### User Collection
-```javascript
-{
-  username: String (required),
-  email: String (required, unique),
-  password: String (required, hashed),
-  role: String (enum: ['user', 'admin'], default: 'user')
-}
-```
-
-### BloodDonation Collection
-```javascript
-{
-  userId: ObjectId (ref: User),
-  name: String,
-  gender: String,
-  phone: String,
-  address: String,
-  dob: Date,
-  bloodType: String,
-  location: String,
-  healthCondition: String,
-  symptoms: String (optional),
-  donationAmount: String,
-  message: String (optional),
-  registeredAt: Date (default: now),
-  status: String (enum: ['Pending', 'Accepted', 'Rejected', 'Completed', 'Schedule Removed']),
-  lastScheduledDate: Date
-}
-```
-
-### BloodRequest Collection
-```javascript
-{
-  userId: ObjectId (ref: User),
-  name: String,
-  gender: String,
-  phone: String,
-  address: String,
-  dob: Date,
-  bloodType: String,
-  location: String,
-  reason: String,
-  otherReason: String (optional),
-  bloodAmount: String,
-  requestedAt: Date (default: now),
-  status: String (enum: ['Pending', 'Accepted', 'Rejected', 'Completed', 'Schedule Removed']),
-  lastScheduledDate: Date
-}
-```
-
-### BloodBank Collection
-```javascript
-{
-  location: String (required, unique),
-  addresses: [String] (required),
-  "A+": Number (default: 0),
-  "A-": Number (default: 0),
-  "B+": Number (default: 0),
-  "B-": Number (default: 0),
-  "AB+": Number (default: 0),
-  "AB-": Number (default: 0),
-  "O+": Number (default: 0),
-  "O-": Number (default: 0),
-  lastUpdated: Date (default: now)
-}
-```
-
-### Schedule Collection
-```javascript
-{
-  userId: ObjectId (ref: User),
-  scheduleDate: Date,
-  timeSlot: String,
-  medications: String,
-  vaccination: String,
-  recentIllness: String,
-  bloodPressure: String,
-  location: String,
-  address: String,
-  createdAt: Date (default: now),
-  lastScheduledDate: Date
-}
-```
-
-### ScheduleRequest Collection
-```javascript
-{
-  userId: ObjectId (ref: User),
-  scheduleDate: Date,
-  session: String (enum: ['Morning', 'Afternoon', 'Evening']),
-  timeSlot: String,
-  bloodType: String,
-  bloodAmount: Number,
-  selectedAddress: String,
-  location: String,
-  reason: String,
-  prescription: String (enum: ['Yes', 'No']),
-  createdAt: Date (default: now),
-  lastScheduledDate: Date
-}
-```
-
-### ConfirmedSchedule Collection
-```javascript
-{
-  userId: ObjectId (ref: User),
-  type: String (enum: ['Donation', 'Request']),
-  scheduleDate: Date,
-  createdAt: Date (default: now)
-}
-```
 
 ## Installation & Setup
 
@@ -501,42 +343,6 @@ blood-donation-hub/
     └── images/                    # Application images and icons
 ```
 
-## Design Principles
-
-### User Interface
-- Clean, intuitive design with gentle color schemes
-- Responsive layout for multiple device sizes
-- Professional red theme aligned with healthcare branding
-- Clear visual hierarchy with proper spacing
-- Gender-specific profile icons (male/female)
-- Consistent button styling and hover effects
-
-### User Experience
-- Minimal clicks to complete actions
-- Real-time feedback on form submissions
-- Clear status messages throughout the workflow
-- Auto-dismiss alerts after 10 seconds
-- Smooth transitions and animations
-- Disabled states prevent premature submissions
-
-### Accessibility
-- Clear labeling on all form fields
-- Required field indicators
-- Error messages for validation failures
-- Keyboard navigation support
-- Readable font sizes and contrast ratios
-
-## Blood Type Compatibility
-
-The system supports all major blood types:
-- **A+**: Can donate to A+, AB+
-- **A-**: Can donate to A+, A-, AB+, AB-
-- **B+**: Can donate to B+, AB+
-- **B-**: Can donate to B+, B-, AB+, AB-
-- **AB+**: Universal recipient, can donate to AB+
-- **AB-**: Can donate to AB+, AB-
-- **O+**: Can donate to A+, B+, AB+, O+
-- **O-**: Universal donor, can donate to all types
 
 ## Coverage Area
 
@@ -600,103 +406,17 @@ Ariyalur, Chengalpattu, Chennai, Coimbatore, Cuddalore, Dharmapuri, Dindigul, Er
 - Inventory updates
 - History viewing
 
-## Performance Considerations
 
-### Database Optimization
-- Indexed fields: email (unique), userId (foreign keys)
-- Lean queries for read-heavy operations
-- Batch updates for schedule confirmations
-- Timestamp tracking for audit trails
-
-### Session Management
-- MongoDB store for session persistence
-- Configurable session expiry
-- Automatic session cleanup
-- Secure cookie settings
-
-### Frontend Performance
-- Minimal external dependencies
-- Inline critical CSS
-- Deferred JavaScript loading
-- Optimized image assets
-
-## Future Enhancements
-
-### Planned Features
-1. Email/SMS notifications for status updates
-2. Mobile application (iOS/Android)
-3. Blood donor rewards program
-4. Emergency blood request system
-5. Blood donation camps management
-6. Donor health history tracking
-7. Multi-language support (Tamil, English)
-8. Payment gateway for voluntary donations
-9. Analytics dashboard for administrators
-10. Integration with hospital management systems
-
-### Technical Improvements
-1. Migration to TypeScript for type safety
-2. API versioning for mobile app support
-3. Real-time notifications using WebSockets
-4. Caching layer for frequently accessed data
-5. Automated testing suite (unit, integration, e2e)
-6. CI/CD pipeline setup
-7. Docker containerization
-8. Cloud deployment (AWS/Azure)
-9. Load balancing for scalability
-10. Database replication for high availability
-
-## Maintenance & Support
-
-### Regular Maintenance
-- Weekly database backups
-- Monthly security updates
-- Quarterly feature reviews
-- Annual architecture assessments
 
 ### Support Channels
 - **Technical Support**: loheshkanna55@gmail.com
 - **Phone**: +91 63820 27313
 - **Instagram**: @lohesh__
 
-### Issue Reporting
-When reporting issues, please include:
-1. User role (User/Admin)
-2. Steps to reproduce
-3. Expected vs actual behavior
-4. Screenshots if applicable
-5. Browser/device information
-
-## Deployment Guidelines
-
-### Production Checklist
-- [ ] Set strong session secret
-- [ ] Configure production MongoDB URI
-- [ ] Enable HTTPS
-- [ ] Set secure cookie options
-- [ ] Configure proper CORS settings
-- [ ] Set up monitoring and logging
-- [ ] Configure backup strategy
-- [ ] Set up error tracking
-- [ ] Performance optimization
-- [ ] Security audit
 
 ### Environment-Specific Settings
 
-**Development**
-```env
-NODE_ENV=development
-PORT=3000
-MONGO_URI=mongodb://localhost:27017/blood-donation
-```
 
-**Production**
-```env
-NODE_ENV=production
-PORT=80
-MONGO_URI=mongodb+srv://user:pass@cluster.mongodb.net/blood-donation
-SESSION_SECRET=strong_random_secret
-```
 
 ## License
 
@@ -708,7 +428,6 @@ This project is developed for educational and social welfare purposes.
 **Lohesh Kanna. G**
 - B.Tech in Information Technology, AAMEC
 - Founder, Blood Donation Hub
-- Investment: ₹50,000+
 
 ### Technology Partners
 - MongoDB for database solutions
@@ -733,15 +452,6 @@ This project is developed for educational and social welfare purposes.
 
 ---
 
-## Appendix
-
-### Blood Donation Eligibility Criteria
-- Age: 18-65 years
-- Weight: Minimum 45 kg
-- Hemoglobin: Minimum 12.5 g/dL
-- Pulse: 50-100 beats/minute
-- Blood Pressure: 50-100 mm Hg / 90-180 mm Hg
-- Temperature: Normal (98.6°F)
 
 ### Medical Reasons for Blood Requests
 Accident, Surgery, Cancer, Anemia, Thalassemia, Hemophilia, Dengue, Leukemia, Kidney Disease, Liver Disease, Pregnancy Complications, Organ Transplant, Heart Surgery, Bone Marrow Transplant, Burn Victim, Snake Bite, Severe Infection, HIV/AIDS, COVID-19 Complications, and custom reasons.
@@ -751,13 +461,11 @@ Accident, Surgery, Cancer, Anemia, Thalassemia, Hemophilia, Dengue, Leukemia, Ki
 **Afternoon Session**: 12:00 PM - 03:00 PM
 **Evening Session**: 04:00 PM - 07:00 PM
 
-Each session divided into 1-hour slots for efficient scheduling.
 
 ---
 
 **Document Version**: 1.0
 **Last Updated**: February 2025
-**Reviewed By**: Development Team
-**Status**: Ready for Infosys Review
 
-© 2025 Blood Donation Hub. All rights reserved.
+
+
