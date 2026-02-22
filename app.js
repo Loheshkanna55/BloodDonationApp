@@ -21,8 +21,8 @@ const requestSchedule = require('./routes/requestSchedule')
 const availability = require('./routes/availability')
 const multer = require("multer");
 const upload = multer();
+const createAdminIfNotExists = require("./config/createAdmin");
 
-//const adminRoute = require('./routes/admin')
 
 require('dotenv').config();
 
@@ -31,10 +31,14 @@ const app = express();
 // MongoDB connection
 console.log('MONGO_URI:', process.env.MONGO_URI);
 
-mongoose.connect('mongodb+srv://Lohesh:Loki2004@cluster0.n992qh5.mongodb.net/blood-donation?retryWrites=true&w=majority', {
-})
-.then(() => console.log('MongoDB connected'))
-.catch(err => console.error('MongoDB connection error:', err));
+mongoose.connect(process.env.MONGO_URI)
+  .then(async () => {
+    console.log("Database connected");
+
+    await createAdminIfNotExists();   
+
+  })
+  .catch(err => console.log(err));
 
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -106,7 +110,7 @@ app.get("/contact", (req, res) => {
 });
 
 // Set static folder
-app.use(express.static(path.join(__dirname, 'public')));
+
 
 // Set view engine
 app.set('view engine', 'ejs');
