@@ -22,6 +22,7 @@ const availability = require('./routes/availability')
 const multer = require("multer");
 const upload = multer();
 const createAdminIfNotExists = require("./config/createAdmin");
+const initializeBloodBanks = require("./config/initializeBloodBanks");
 
 
 require('dotenv').config();
@@ -35,7 +36,8 @@ mongoose.connect(process.env.MONGO_URI)
   .then(async () => {
     console.log("Database connected");
 
-    await createAdminIfNotExists();   
+    await createAdminIfNotExists();
+    await initializeBloodBanks();
 
   })
   .catch(err => console.log(err));
