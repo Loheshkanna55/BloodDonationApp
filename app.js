@@ -36,11 +36,11 @@ mongoose.connect(process.env.MONGO_URI)
   .then(async () => {
     console.log("Database connected");
 
-    await createAdminIfNotExists();
-    await initializeBloodBanks();
-
+    await createAdminIfNotExists();   
+    await seedBloodBanksIfNotExists();
   })
   .catch(err => console.log(err));
+
 
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -150,3 +150,4 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+
