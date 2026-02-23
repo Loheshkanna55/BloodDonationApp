@@ -18,7 +18,7 @@ async function seedBloodBanksIfNotExists() {
     //  Insert into DB
     await BloodBank.insertMany(jsonData);
 
-    console.log("✅ BloodBank data inserted successfully!");
+    console.log("BloodBank data inserted successfully!");
 
   } catch (error) {
     console.error("Seeding Error:", error);
