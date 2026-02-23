@@ -22,7 +22,7 @@ const availability = require('./routes/availability')
 const multer = require("multer");
 const upload = multer();
 const createAdminIfNotExists = require("./config/createAdmin");
-
+const seedBloodBanksIfNotExists = require("./utils/seedBloodBanks");
 
 
 require('dotenv').config();
@@ -150,5 +150,6 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+
 
 
